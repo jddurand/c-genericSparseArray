@@ -90,4 +90,4 @@ Accessor to the val free function.
 
 =head1 SEE ALSO
 
-L<genericHJash|https://github.com/jddurand/c-genericHash>
+L<genericHash|https://github.com/jddurand/c-genericHash>

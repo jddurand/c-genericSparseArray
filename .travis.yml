@@ -14,4 +14,5 @@ before_script:
   - cmake .
 script:
   - make check
+  - ./output/bin/genericSparseArrayTester
   - sudo make install
