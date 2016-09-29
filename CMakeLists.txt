@@ -12,7 +12,7 @@ SET (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)           # General module s
 # -------
 SET (GENERICSPARSEARRAY_VERSION_MAJOR 1)
 SET (GENERICSPARSEARRAY_VERSION_MINOR 0)
-SET (GENERICSPARSEARRAY_VERSION_PATCH 3)
+SET (GENERICSPARSEARRAY_VERSION_PATCH 4)
 SET (GENERICSPARSEARRAY_VERSION ${GENERICSPARSEARRAY_VERSION_MAJOR}.${GENERICSPARSEARRAY_VERSION_MINOR}.${GENERICSPARSEARRAY_VERSION_PATCH})
 
 SET (INCLUDE_OUTPUT_PATH            ${PROJECT_SOURCE_DIR}/output/include)  # General include output path
@@ -44,6 +44,13 @@ ENDIF ()
 # Dependencies
 #############################
 # ----------------------
+# genericStack: required
+# ----------------------
+FIND_PACKAGE (genericStack)
+IF (NOT GENERICSTACK_FOUND)
+    MESSAGE (FATAL_ERROR "genericStack must be detected")
+ENDIF ()
+# ----------------------
 # genericHash: required
 # ----------------------
 FIND_PACKAGE (genericHash)
@@ -68,11 +75,13 @@ IF (GENERICLOGGER_FOUND)
   INCLUDE_DIRECTORIES (
     "${PROJECT_SOURCE_DIR}/include"                      # Include path for the other headers
     "${GENERICLOGGER_INCLUDE_DIRS}"                      # Include path for genericLogger (external - required)
+    "${GENERICSTACK_INCLUDE_DIRS}"                       # Include path for genericStack (external - required)
     "${GENERICHASH_INCLUDE_DIRS}"                        # Include path for genericHash (external - required)
     )
 ELSE (GENERICLOGGER_FOUND)
   INCLUDE_DIRECTORIES (
     "${PROJECT_SOURCE_DIR}/include"                      # Include path for the other headers
+    "${GENERICSTACK_INCLUDE_DIRS}"                       # Include path for genericStack (external - required)
     "${GENERICHASH_INCLUDE_DIRS}"                        # Include path for genericHash (external - required)
     )
 ENDIF (GENERICLOGGER_FOUND)
