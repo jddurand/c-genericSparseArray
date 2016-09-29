@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <genericHash.h>
 
+typedef genericHash_t genericSparseArray_t;
+
 #define GENERICSPARSEARRAY_NEW(sparseArrayName, keyIndFunctionp) \
   GENERICHASH_NEW(sparseArrayName, keyIndFunctionp)
 

@@ -11,7 +11,7 @@ static void   mySparseArrayKeyFreeFunction(void *userDatavp, void **pp);
 static void  *mySparseArrayValCopyFunction(void *userDatavp, void **pp);
 static void   mySparseArrayValFreeFunction(void *userDatavp, void **pp);
 static int    mySparseArrayTest(short withAllocb);
-static void   mySparseArrayDump(myContext_t *myContextp, genericHash_t *mySparseArrayp);
+static void   mySparseArrayDump(myContext_t *myContextp, genericSparseArray_t *mySparseArrayp);
 
 int main(int argc, char **argv) {
   if (mySparseArrayTest(0) == 0) {
@@ -24,14 +24,14 @@ int main(int argc, char **argv) {
 }
 
 static int mySparseArrayTest(short withAllocb) {
-  myContext_t      myContext;
-  myContext_t     *myContextp = &myContext;
-  myContext_t     *myContextFoundp;
-  int              rci = 0;
-  genericLogger_t *genericLoggerp = GENERICLOGGER_NEW(GENERICLOGGER_LOGLEVEL_TRACE);
-  genericHash_t   *mySparseArrayp;
-  short            findResultb;
-  short            removeResultb;
+  myContext_t           myContext;
+  myContext_t          *myContextp = &myContext;
+  myContext_t          *myContextFoundp;
+  int                   rci = 0;
+  genericLogger_t      *genericLoggerp = GENERICLOGGER_NEW(GENERICLOGGER_LOGLEVEL_TRACE);
+  genericSparseArray_t *mySparseArrayp;
+  short                 findResultb;
+  short                 removeResultb;
 
   myContext.genericLoggerp = genericLoggerp;
 
@@ -248,13 +248,13 @@ static void  mySparseArrayValFreeFunction(void *userDatavp, void **pp)
 }
 
 /*********************************************************************/
-static void mySparseArrayDump(myContext_t *myContextp, genericHash_t *mySparseArrayp)
+static void mySparseArrayDump(myContext_t *myContextp, genericSparseArray_t *mySparseArrayp)
 /*********************************************************************/
 {
   int i;
   int j;
 
-  GENERICLOGGER_TRACE(myContextp->genericLoggerp, "... Hash Dump");
+  GENERICLOGGER_TRACE(myContextp->genericLoggerp, "... SparseArray Dump");
   for (i = 0; i < GENERICSTACK_USED(mySparseArrayp->keyStackp); i++) {
     genericStack_t *subKeyStackp;
     genericStack_t *subValStackp;
