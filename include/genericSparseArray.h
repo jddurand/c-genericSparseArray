@@ -14,6 +14,12 @@ typedef genericHash_t genericSparseArray_t;
 #define GENERICSPARSEARRAY_NEW_ALL(sparseArrayName, keyIndFunctionp, valCopyFunctionp, valFreeFunctionp, wantedSize, wantedSubSize) \
   GENERICHASH_NEW_ALL(sparseArrayName, keyIndFunctionp, NULL, NULL, NULL, valCopyFunctionp, valFreeFunctionp, wantedSize, wantedSubSize)
 
+#define GENERICSPARSEARRAY_INIT(sparseArrayName, keyIndFunctionp) \
+  GENERICHASH_INIT(sparseArrayName, keyIndFunctionp)
+
+#define GENERICSPARSEARRAY_INIT_ALL(sparseArrayName, keyIndFunctionp, valCopyFunctionp, valFreeFunctionp, wantedSize, wantedSubSize) \
+  GENERICHASH_INIT_ALL(sparseArrayName, keyIndFunctionp, NULL, NULL, NULL, valCopyFunctionp, valFreeFunctionp, wantedSize, wantedSubSize)
+
 #define GENERICSPARSEARRAY_VALCOPYFUNCTION(sparseArrayName) \
   GENERICHASH_VALCOPYFUNCTION(sparseArrayName)
   
@@ -37,6 +43,15 @@ typedef genericHash_t genericSparseArray_t;
 
 #define GENERICSPARSEARRAY_FREE(sparseArrayName, userDatavp) \
   GENERICHASH_FREE(sparseArrayName, userDatavp)
+  
+#define GENERICSPARSEARRAY_USED(sparseArrayName) \
+  GENERICHASH_USED(sparseArrayName)
+  
+#define GENERICSPARSEARRAY_RESET(sparseArrayName, userDatavp) \
+  GENERICHASH_RESET(sparseArrayName, userDatavp)
+  
+#define GENERICSPARSEARRAY_RELAX(sparseArrayName, userDatavp) \
+  GENERICHASH_RELAX(sparseArrayName, userDatavp)
   
 #define GENERICSPARSEARRAY_ERROR(sparseArrayName) \
   GENERICHASH_ERROR(sparseArrayName)

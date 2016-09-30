@@ -17,6 +17,7 @@ int main(int argc, char **argv) {
   if (mySparseArrayTest(0) == 0) {
     return 1;
   }
+  return 0;
   if (mySparseArrayTest(1) == 0) {
     return 1;
   }
@@ -29,15 +30,22 @@ static int mySparseArrayTest(short withAllocb) {
   myContext_t          *myContextFoundp;
   int                   rci = 0;
   genericLogger_t      *genericLoggerp = GENERICLOGGER_NEW(GENERICLOGGER_LOGLEVEL_TRACE);
+  genericSparseArray_t  mySparseArray;
   genericSparseArray_t *mySparseArrayp;
   short                 findResultb;
   short                 removeResultb;
+  int                   i;
 
   myContext.genericLoggerp = genericLoggerp;
 
-  GENERICSPARSEARRAY_NEW(mySparseArrayp, mySparseArrayIndFunction);
+  if (withAllocb) {
+    GENERICSPARSEARRAY_NEW(mySparseArrayp, mySparseArrayIndFunction);
+  } else {
+    mySparseArrayp = &mySparseArray;
+    GENERICSPARSEARRAY_INIT(mySparseArrayp, mySparseArrayIndFunction);
+  }
   if (GENERICSPARSEARRAY_ERROR(mySparseArrayp)) {
-    GENERICLOGGER_ERROR(genericLoggerp, "Error when creating generic hash");
+    GENERICLOGGER_ERROR(genericLoggerp, "Error when creating generic sparse array");
     rci = 1;
     goto err;
   }
@@ -45,62 +53,74 @@ static int mySparseArrayTest(short withAllocb) {
     GENERICSPARSEARRAY_VALCOPYFUNCTION(mySparseArrayp) = mySparseArrayValCopyFunction;
     GENERICSPARSEARRAY_VALFREEFUNCTION(mySparseArrayp) = mySparseArrayValFreeFunction;
   }
-  GENERICLOGGER_TRACEF(genericLoggerp, "Created hash at %p, alloc mode=%d", mySparseArrayp, (int) withAllocb);
-  mySparseArrayDump(myContextp, mySparseArrayp);
-  
-  GENERICSPARSEARRAY_SET(mySparseArrayp, myContextp, 0, PTR, myContextp);
-  GENERICLOGGER_TRACEF(genericLoggerp, "Pushed PTR %p at indice 0", myContextp);
-  mySparseArrayDump(myContextp, mySparseArrayp);
-
-  GENERICSPARSEARRAY_SET(mySparseArrayp, myContextp, 100, PTR, myContextp);
-  GENERICLOGGER_TRACEF(genericLoggerp, "Setted again PTR %p at indice 100", myContextp);
-  mySparseArrayDump(myContextp, mySparseArrayp);
-
-  GENERICSPARSEARRAY_SET(mySparseArrayp, myContextp, 100, PTR, myContextp);
-  GENERICLOGGER_TRACEF(genericLoggerp, "Setted again PTR %p at indice 100", myContextp);
-  mySparseArrayDump(myContextp, mySparseArrayp);
-
-  GENERICSPARSEARRAY_SET(mySparseArrayp, myContextp, 101, PTR, NULL);
-  GENERICLOGGER_TRACE(genericLoggerp, "Pushed NULL at indice 101");
-  mySparseArrayDump(myContextp, mySparseArrayp);
-
-  GENERICSPARSEARRAY_SET(mySparseArrayp, myContextp, 101, PTR, myContextp);
-  GENERICLOGGER_TRACEF(genericLoggerp, "Setted again PTR %p at indice 101", myContextp);
-  mySparseArrayDump(myContextp, mySparseArrayp);
-
-  GENERICLOGGER_TRACEF(genericLoggerp, "Looking for PTR %p at indice 101", myContextp);
-  GENERICSPARSEARRAY_FIND(mySparseArrayp, myContextp, 101, PTR, &myContextFoundp, findResultb);
-  if (! findResultb) {
-    GENERICLOGGER_ERRORF(genericLoggerp, "Failed to find PTR %p at indice 101", myContextp);
+  if (withAllocb) {
+    GENERICLOGGER_TRACEF(genericLoggerp, "Created sparse array at %p, alloc mode=%d", mySparseArrayp, (int) withAllocb);
   } else {
-    if (myContextp->genericLoggerp == myContextFoundp->genericLoggerp) {
-      GENERICLOGGER_TRACEF(genericLoggerp, "Success searching for PTR %p", myContextFoundp);
-    } else {
-      GENERICLOGGER_TRACEF(genericLoggerp, "Success searching for PTR but found a bad pointer %p", myContextFoundp);
-    }
+    GENERICLOGGER_TRACEF(genericLoggerp, "Initialized sparse array at %p, alloc mode=%d", mySparseArrayp, (int) withAllocb);
   }
 
-  GENERICLOGGER_TRACEF(genericLoggerp, "Removing PTR %p at indice 101", myContextp);
-  GENERICSPARSEARRAY_REMOVE(mySparseArrayp, myContextp, 101, PTR, &myContextFoundp, removeResultb);
-  mySparseArrayDump(myContextp, mySparseArrayp);
-  if (! removeResultb) {
-    GENERICLOGGER_ERRORF(genericLoggerp, "Failed to remove PTR %p at indice 101", myContextp);
-  } else {
-    if (myContextp->genericLoggerp == myContextFoundp->genericLoggerp) {
-      if (withAllocb) {
-	mySparseArrayValFreeFunction(myContextp, (void **) &myContextFoundp);
+  for (i = 0; i < 2; i++) {
+    mySparseArrayDump(myContextp, mySparseArrayp);
+  
+    GENERICSPARSEARRAY_SET(mySparseArrayp, myContextp, 0, PTR, myContextp);
+    GENERICLOGGER_TRACEF(genericLoggerp, "Pushed PTR %p at indice 0", myContextp);
+    mySparseArrayDump(myContextp, mySparseArrayp);
+
+    GENERICSPARSEARRAY_SET(mySparseArrayp, myContextp, 100, PTR, myContextp);
+    GENERICLOGGER_TRACEF(genericLoggerp, "Setted again PTR %p at indice 100", myContextp);
+    mySparseArrayDump(myContextp, mySparseArrayp);
+
+    GENERICSPARSEARRAY_SET(mySparseArrayp, myContextp, 100, PTR, myContextp);
+    GENERICLOGGER_TRACEF(genericLoggerp, "Setted again PTR %p at indice 100", myContextp);
+    mySparseArrayDump(myContextp, mySparseArrayp);
+
+    GENERICSPARSEARRAY_SET(mySparseArrayp, myContextp, 101, PTR, NULL);
+    GENERICLOGGER_TRACE(genericLoggerp, "Pushed NULL at indice 101");
+    mySparseArrayDump(myContextp, mySparseArrayp);
+
+    GENERICSPARSEARRAY_SET(mySparseArrayp, myContextp, 101, PTR, myContextp);
+    GENERICLOGGER_TRACEF(genericLoggerp, "Setted again PTR %p at indice 101", myContextp);
+    mySparseArrayDump(myContextp, mySparseArrayp);
+
+    GENERICLOGGER_TRACEF(genericLoggerp, "Looking for PTR %p at indice 101", myContextp);
+    GENERICSPARSEARRAY_FIND(mySparseArrayp, myContextp, 101, PTR, &myContextFoundp, findResultb);
+    if (! findResultb) {
+      GENERICLOGGER_ERRORF(genericLoggerp, "Failed to find PTR %p at indice 101", myContextp);
+    } else {
+      if (myContextp->genericLoggerp == myContextFoundp->genericLoggerp) {
+	GENERICLOGGER_TRACEF(genericLoggerp, "Success searching for PTR %p", myContextFoundp);
+      } else {
+	GENERICLOGGER_TRACEF(genericLoggerp, "Success searching for PTR but found a bad pointer %p", myContextFoundp);
       }
-      GENERICLOGGER_TRACEF(genericLoggerp, "Success removing PTR %p at indice 101", myContextFoundp);
-    } else {
-      GENERICLOGGER_TRACEF(genericLoggerp, "Success removing PTR at indice 101 but found a bad pointer %p", myContextFoundp);
     }
-    GENERICLOGGER_TRACEF(genericLoggerp, "Looking again for PTR %p at indice 101", myContextp);
-    GENERICSPARSEARRAY_FIND(mySparseArrayp, myContextp, 101, PTR, &myContextFoundp, removeResultb);
+
+    GENERICLOGGER_TRACEF(genericLoggerp, "Removing PTR %p at indice 101", myContextp);
+    GENERICSPARSEARRAY_REMOVE(mySparseArrayp, myContextp, 101, PTR, &myContextFoundp, removeResultb);
+    mySparseArrayDump(myContextp, mySparseArrayp);
     if (! removeResultb) {
-      GENERICLOGGER_TRACEF(genericLoggerp, "Failed to find PTR %p at indice 101 and this is ok", myContextp);
+      GENERICLOGGER_ERRORF(genericLoggerp, "Failed to remove PTR %p at indice 101", myContextp);
     } else {
-      GENERICLOGGER_ERRORF(genericLoggerp, "Unexpected success searching for PTR %p at indice 101, got %p", myContextp, myContextFoundp);
+      if (myContextp->genericLoggerp == myContextFoundp->genericLoggerp) {
+	if (withAllocb) {
+	  mySparseArrayValFreeFunction(myContextp, (void **) &myContextFoundp);
+	}
+	GENERICLOGGER_TRACEF(genericLoggerp, "Success removing PTR %p at indice 101", myContextFoundp);
+      } else {
+	GENERICLOGGER_TRACEF(genericLoggerp, "Success removing PTR at indice 101 but found a bad pointer %p", myContextFoundp);
+      }
+      GENERICLOGGER_TRACEF(genericLoggerp, "Looking again for PTR %p at indice 101", myContextp);
+      GENERICSPARSEARRAY_FIND(mySparseArrayp, myContextp, 101, PTR, &myContextFoundp, removeResultb);
+      if (! removeResultb) {
+	GENERICLOGGER_TRACEF(genericLoggerp, "Failed to find PTR %p at indice 101 and this is ok", myContextp);
+      } else {
+	GENERICLOGGER_ERRORF(genericLoggerp, "Unexpected success searching for PTR %p at indice 101, got %p", myContextp, myContextFoundp);
+      }
     }
+
+    GENERICLOGGER_TRACE(genericLoggerp, ".................................");
+    GENERICLOGGER_TRACE(genericLoggerp, "... Relaxing the sparse array ...");
+    GENERICLOGGER_TRACE(genericLoggerp, ".................................");
+    GENERICSPARSEARRAY_RELAX(mySparseArrayp, myContextp);
   }
 
   rci = 1;
@@ -110,8 +130,13 @@ static int mySparseArrayTest(short withAllocb) {
   rci = 0;
 
  done:
-  GENERICLOGGER_TRACEF(genericLoggerp, "Freeing sparse array at %p", mySparseArrayp);
-  GENERICSPARSEARRAY_FREE(mySparseArrayp, myContextp);
+  if (withAllocb) {
+    GENERICLOGGER_TRACEF(genericLoggerp, "Freeing sparse array at %p", mySparseArrayp);
+    GENERICSPARSEARRAY_FREE(mySparseArrayp, myContextp);
+  } else {
+    GENERICLOGGER_TRACEF(genericLoggerp, "Resetting sparse array at %p", mySparseArrayp);
+    GENERICSPARSEARRAY_RESET(mySparseArrayp, myContextp);
+  }
   
   GENERICLOGGER_INFOF(genericLoggerp, "return %d", rci);
   GENERICLOGGER_FREE(genericLoggerp);

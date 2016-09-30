@@ -60,6 +60,14 @@ Optional. Initial number of columns within a hash row.
 
 =back
 
+=head2 GENERICSPARSEARRAY_INIT(sparseArrayName, keyIndFunctionp)
+
+Alias to GENERICSPARSEARRAY_INIT_ALL(sparseArrayName, keyIndFunctionp, valCopyFunctionp, valFreeFunctionp, wantedSize, wantedSubSize), see below.
+
+=head2 GENERICSPARSEARRAY_INIT_ALL(sparseArrayName, keyIndFunctionp, valCopyFunctionp, valFreeFunctionp, wantedSize, wantedSubSize)
+
+Create an empty sparse array on the stack, where function pointer prototypes have the same meaning as in GENERICSPARSEARRAY_NEW.
+
 =head2 GENERICSPARSEARRAY_SET(sparseArrayName, userDatavp, indice, valType, valVal)
 
 Set an entry in the array C<sparseArrayName> at indice C<keyVal>, and value C<valVal> of type C<valType>. C<keyType> and C<valType> must be I<shorthands> for genericStack constants, i.e. C<CHAR>, C<PTR>, etc...
@@ -72,9 +80,21 @@ Find an entry in the array C<sparseArrayName> at indice C<keyVal>, and expecting
 
 Remove an entry in the array C<sparseArrayName> at indice C<keyVal>, and expecting a value of type C<valType>. C<valValp> must be a pointer, eventually C<NULL>. If successful, the content of C<valValp> is filled with the found value. When C<valValp> is C<NULL>, key and data are explicitely removed, eventually calling the free callback functions. C<keyType> and C<valType> must be I<shorthands> for genericStack constants, i.e. C<CHAR>, C<PTR>, etc...
 
-=head2 GENERICSPARSEARRAY_FREE(sparseArrayName)
+=head2 GENERICSPARSEARRAY_FREE(sparseArrayName, useDatavp)
 
-Releases the array. This may call the free callback functions.
+Releases a sparse array allocated on the heap. This may call the free callback functions.
+
+=head2 GENERICSPARSEARRAY_RESET(sparseArrayName, useDatavp)
+
+Releases a sparse array initialized on the stack. This may call the free callback functions.
+
+=head2 GENERICSPARSEARRAY_RELAX(sparseArrayName, useDatavp)
+
+Releases partially the array, so that it can be reused. More efficient than recreating the array in case of reuse.
+
+=head2 GENERICSPARSEARRAY_USED(sparseArrayName)
+
+Returns a true value if the array has an error, a false value otherwise.
 
 =head2 GENERICSPARSEARRAY_ERROR(sparseArrayName)
 
