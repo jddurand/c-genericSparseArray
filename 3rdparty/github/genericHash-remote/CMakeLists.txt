@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 3.0.0 FATAL_ERROR)
 INCLUDE ("3rdparty/github/cmake-utils-remote/cmake/MyPackageStart.cmake")
-MYPACKAGESTART (genericHash 1 0 22)
+MYPACKAGESTART (genericHash 1 0 23)
 
 #############################
 # Dependencies
@@ -33,10 +33,10 @@ ADD_EXECUTABLE        (genericHashTesterStatic EXCLUDE_FROM_ALL test/genericHash
 
 IF (ALL_IN_ONE)
   TARGET_LINK_LIBRARIES (genericHashTester       genericLogger)
-  TARGET_LINK_LIBRARIES (genericHashTesterStatic genericLogger_static)
+  TARGET_LINK_LIBRARIES (genericHashTesterStatic genericLogger)
 ELSE ()
   TARGET_LINK_LIBRARIES (genericHashTester       ${GENERICLOGGER_LIBRARIES})
-  TARGET_LINK_LIBRARIES (genericHashTesterStatic ${GENERICLOGGER_STATIC_LIBRARIES})
+  TARGET_LINK_LIBRARIES (genericHashTesterStatic ${GENERICLOGGER_LIBRARIES})
 ENDIF ()
 
 SET_TARGET_PROPERTIES (genericHashTester       PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_PATH})
