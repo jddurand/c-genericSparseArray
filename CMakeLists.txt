@@ -39,10 +39,10 @@ ADD_EXECUTABLE        (genericSparseArrayTesterStatic EXCLUDE_FROM_ALL test/gene
 
 IF (ALL_IN_ONE)
   TARGET_LINK_LIBRARIES (genericSparseArrayTester       genericLogger)
-  TARGET_LINK_LIBRARIES (genericSparseArrayTesterStatic genericLogger_static)
+  TARGET_LINK_LIBRARIES (genericSparseArrayTesterStatic genericLogger)
 ELSE ()
   TARGET_LINK_LIBRARIES (genericSparseArrayTester       ${GENERICLOGGER_LIBRARIES})
-  TARGET_LINK_LIBRARIES (genericSparseArrayTesterStatic ${GENERICLOGGER_STATIC_LIBRARIES})
+  TARGET_LINK_LIBRARIES (genericSparseArrayTesterStatic ${GENERICLOGGER_LIBRARIES})
 ENDIF ()
 
 SET_TARGET_PROPERTIES (genericSparseArrayTester       PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_PATH})
