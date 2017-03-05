@@ -17,6 +17,7 @@ script:
   - make check
   - make install DESTDIR=/tmp
   - rm -rf output CMakeCache.txt CMakeFiles
+  - cmake .
   - make check
   - make package
   - sudo make install
