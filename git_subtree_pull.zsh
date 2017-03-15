@@ -2,12 +2,12 @@
 
 git fetch origin
 foreach this (cmake-utils genericHash genericLogger) {
-  git fetch $this-remote master
+  git fetch $this master
 }
 
 git clean -ffdx
 foreach this (cmake-utils genericHash genericLogger) {
-  git subtree pull --prefix 3rdparty/github/$this-remote $this-remote master --squash
+  git subtree pull --prefix 3rdparty/github/$this $this master --squash
 }
 
 exit 0
