@@ -1,6 +1,9 @@
 language: c
 sudo: required
 before_script:
+  - sudo apt-get update
+  - sudo apt-get install nsis
+# Dependencies
   - sh ./install-c-genericLogger.sh
   - sh ./install-c-genericStack.sh
   - sh ./install-c-genericHash.sh
