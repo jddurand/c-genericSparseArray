@@ -21,12 +21,6 @@ MYPACKAGEDEPENDENCY (genericLogger "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/github/
 #########
 MYPACKAGECHECK(genericSparseArrayTester)
 
-##########
-# Export #
-##########
-MYPACKAGECMAKEEXPORT()
-MYPACKAGEPKGCONFIGEXPORT()
-
 #############
 # Packaging #
 #############
