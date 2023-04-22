@@ -156,7 +156,7 @@ MACRO (MYPACKAGEDEPENDENCY packageDepend packageDependSourceDir)
   # Gather current project's target candidates
   #
   SET (_test_candidates ${${PROJECT_NAME}_TEST_EXECUTABLE})
-  SET (_lib_candidates ${PROJECT_NAME} ${PROJECT_NAME}_static ${PROJECT_NAME} ${PROJECT_NAME}_static)
+  SET (_lib_candidates ${PROJECT_NAME} ${PROJECT_NAME}_static ${PROJECT_NAME}_objs ${PROJECT_NAME}_static_objs)
   SET (_exe_candidates  ${${PROJECT_NAME}_EXECUTABLE})
   SET (_candidates)
   IF (_TESTS)
