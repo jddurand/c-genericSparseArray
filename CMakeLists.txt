@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 3.15.0 FATAL_ERROR)
-PROJECT(genericSparseArray VERSION 1.0.51 LANGUAGES C)
+PROJECT(genericSparseArray VERSION 1.0.52 LANGUAGES C)
 IF (NOT MYPACKAGEBOOTSTRAP_DONE)
   INCLUDE ("3rdparty/github/cmake-utils/cmake/MyPackageBootstrap.cmake")
 ENDIF ()
