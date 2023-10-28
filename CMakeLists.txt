@@ -14,7 +14,7 @@ MYPACKAGETESTEXECUTABLE(genericSparseArrayTester test/genericSparseArray.c)
 # Dependencies #
 ################
 MYPACKAGEDEPENDENCY (genericHash   "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/github/genericHash" LOCAL)
-MYPACKAGEDEPENDENCY (genericLogger "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/github/genericLogger" TESTS STATIC LOCAL)
+MYPACKAGEDEPENDENCY (genericLogger "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/github/genericLogger" TESTS LOCAL)
 
 #########
 # Tests #
