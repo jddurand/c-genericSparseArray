@@ -53,6 +53,7 @@ cmake_helpers_library(genericSparseArray
 #
 # Create test executables
 #
+include(CTest)
 cmake_helpers_exe(genericSparseArrayTester TEST TRUE SOURCES test/genericSparseArray.c DEPENDS PUBLIC genericLogger::genericLogger)
 #
 # Package
