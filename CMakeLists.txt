@@ -1,28 +1,28 @@
 #
 # Multi-config generator, e.g. Visual Studio on Windows:
 #
-# cmake -S c-genericSpaceArray -B c-genericSpaceArray-build
-# cmake --build c-genericSpaceArray-build --config RelWithDebInfo
-# ctest --test-dir c-genericSpaceArray-build -C RelWithDebInfo
+# cmake -S c-genericSparseArray -B c-genericSparseArray-build
+# cmake --build c-genericSparseArray-build --config RelWithDebInfo
+# ctest --test-dir c-genericSparseArray-build -C RelWithDebInfo
 # Windows:
-#   cmake --install c-genericSpaceArray-build --config RelWithDebInfo --prefix %cd%/c-genericSpaceArray-install
+#   cmake --install c-genericSparseArray-build --config RelWithDebInfo --prefix %cd%/c-genericSparseArray-install
 # Others:
-#   cmake --install c-genericSpaceArray-build --config RelWithDebInfo --prefix `pwd`/c-genericSpaceArray-install
-# cmake --build c-genericSpaceArray-build --config RelWithDebInfo --target package
+#   cmake --install c-genericSparseArray-build --config RelWithDebInfo --prefix `pwd`/c-genericSparseArray-install
+# cmake --build c-genericSparseArray-build --config RelWithDebInfo --target package
 #
 # Single-config generator, e.g. NMake Makefiles on Windows, Unix Makefiles on Linxu:
 #
-# cmake -S c-genericSpaceArray -B c-genericSpaceArray-build -DCMAKE_BUILD_TYPE=RelWithDebInfo
-# cmake --build c-genericSpaceArray-build
-# ctest --test-dir c-genericSpaceArray-build
+# cmake -S c-genericSparseArray -B c-genericSparseArray-build -DCMAKE_BUILD_TYPE=RelWithDebInfo
+# cmake --build c-genericSparseArray-build
+# ctest --test-dir c-genericSparseArray-build
 # Windows:
-#   cmake --install c-genericSpaceArray-build --prefix %cd%/c-genericSpaceArray-install
+#   cmake --install c-genericSparseArray-build --prefix %cd%/c-genericSparseArray-install
 # Others:
-#   cmake --install c-genericSpaceArray-build --prefix `pwd`/c-genericSpaceArray-install
-# cmake --build c-genericSpaceArray-build --target package
+#   cmake --install c-genericSparseArray-build --prefix `pwd`/c-genericSparseArray-install
+# cmake --build c-genericSparseArray-build --target package
 #
 cmake_minimum_required(VERSION 3.26.0 FATAL_ERROR)
-project(genericSpaceArray VERSION 1.0.53 LANGUAGES C)
+project(genericSparseArray VERSION 1.0.53 LANGUAGES C)
 #
 # Get library helper
 #
