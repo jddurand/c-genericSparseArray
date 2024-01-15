@@ -27,34 +27,60 @@ project(genericSparseArray VERSION 1.0.54 LANGUAGES C)
 # Get library helper
 #
 include(FetchContent)
-FetchContent_Declare(cmake-helpers GIT_REPOSITORY https://github.com/jddurand/cmake-helpers.git GIT_SHALLOW TRUE)
+FetchContent_Declare(cmake-helpers
+  GIT_REPOSITORY https://github.com/jddurand/cmake-helpers.git
+  GIT_SHALLOW TRUE
+)
 FetchContent_MakeAvailable(cmake-helpers)
 #
 # Dependencies
 #
+set(genericSparseArray_depends)
+set(genericSparseArray_depends_ext)
+set(genericSparseArray_find_dependencies)
+#
+# genericHash: public dependency
+#
+set(genericHash_git https://github.com/jddurand/c-genericHash.git)
 cmake_helpers_depend(genericHash
-  EXTERNALPROJECT_ADD_ARGS GIT_REPOSITORY https://github.com/jddurand/c-genericHash.git GIT_SHALLOW TRUE
-  FIND_PACKAGE_ARGS REQUIRED CONFIG
+  EXTERNALPROJECT_ADD_ARGS
+    GIT_REPOSITORY ${genericHash_git}
+    GIT_SHALLOW TRUE
+  FIND_PACKAGE_ARGS
+    REQUIRED
+    CONFIG
 )
+list(APPEND genericSparseArray_find_dependencies "genericHash REQUIRED CONFIG")
+list(APPEND genericSparseArray_depends PUBLIC genericHash::genericHash)
 #
-# Dependencies
+# Dependencies: test dependency
 #
+set(genericLogger_git https://github.com/jddurand/c-genericLogger.git)
 cmake_helpers_depend(genericLogger
-  EXTERNALPROJECT_ADD_ARGS GIT_REPOSITORY https://github.com/jddurand/c-genericLogger.git GIT_SHALLOW TRUE
-  FIND_PACKAGE_ARGS REQUIRED CONFIG
+  EXTERNALPROJECT_ADD_ARGS
+    GIT_REPOSITORY ${genericLogger_git}
+    GIT_SHALLOW TRUE
+  FIND_PACKAGE_ARGS
+    REQUIRED
+    CONFIG
+  MAKEAVAILABLE FALSE
 )
 #
 # Create library
 #
 cmake_helpers_library(genericSparseArray
-  FIND_DEPENDENCIES "genericHash REQUIRED CONFIG"
-  DEPENDS PUBLIC genericHash::genericHash
+  FIND_DEPENDENCIES ${genericSparseArray_find_dependencies}
+  DEPENDS           ${genericSparseArray_depends}
+  DEPENDS_EXT       ${genericSparseArray_depends_ext}
 )
 #
 # Create test executables
 #
 include(CTest)
-cmake_helpers_exe(genericSparseArrayTester TEST TRUE SOURCES test/genericSparseArray.c DEPENDS PUBLIC genericLogger::genericLogger)
+cmake_helpers_exe(genericSparseArrayTester
+  TEST TRUE
+  SOURCES test/genericSparseArray.c
+  DEPENDS PUBLIC genericLogger::genericLogger)
 #
 # Package
 #
